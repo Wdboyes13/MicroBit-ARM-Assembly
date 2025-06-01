@@ -12,4 +12,10 @@ It will generate `blink.hex` which you can flash to a micro:bit v2
 [micro:bit developer](https://tech.microbit.org/hardware/schematic/#v2-pinmap)  
 ** **  
 The Makefile and Linker Script are from [this repo](https://github.com/cpmpercussion/microbit-v2-baremetal/)  
-Which was also where i got the idea to do this from
+Which was also where i got the idea to do this from  
+  
+## About writing the code  
+Because of how the LEDs in the micro:bit are wired  
+I had to do something called LED Multiplexing  
+Where you quickly loop through rows and columns  
+Creating the illusion of a still image
