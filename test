@@ -1,5 +1,13 @@
-•  •     •  •
-•  •     •  •
-             
-•           •
-   •  •  •   
+dosh() {
+    file=$1
+    make clean
+    make FILE=$file
+    if [ -d "/Volumes/MICROBIT" ]; then
+        cp $file.hex /Volumes/MICROBIT/
+    fi
+    make clean
+}
+
+if [ -n "$1" ]; then
+    dosh "$1"
+fi

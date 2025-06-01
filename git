@@ -1,0 +1,7 @@
+git add .
+msg="Updated at $(date)"
+if [ -n "$1" ]; then
+    msg="$1 - Updated at $(date)"
+fi
+git commit -m "$msg"
+git push origin main
