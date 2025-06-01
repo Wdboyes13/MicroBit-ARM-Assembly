@@ -1,0 +1,116 @@
+
+There are no discarded input sections
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+FLASH            0x00000000         0x00080000         xr
+RAM              0x20000000         0x0001f000         xrw
+CODERAM          0x0081f000         0x00001000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+
+.text           0x00000000       0xf8
+ *(.vectors)
+ .vectors       0x00000000        0x8 blink2.o
+ *(.text*)
+ *fill*         0x00000008        0x8 
+ .text          0x00000010       0xe8 blink2.o
+                0x00000010                _start
+ *(.rodata*)
+                0x000000f8                        . = ALIGN (0x4)
+                0x000000f8                        __etext = .
+                [!provide]                        PROVIDE (nmi_handler = default_handler)
+                [!provide]                        PROVIDE (hardfault_handler = default_handler)
+                [!provide]                        PROVIDE (svc_handler = default_handler)
+                [!provide]                        PROVIDE (debugmon_handler = default_handler)
+                [!provide]                        PROVIDE (pendsv_handler = default_handler)
+                [!provide]                        PROVIDE (systick_handler = default_handler)
+                [!provide]                        PROVIDE (power_clock_handler = default_handler)
+                [!provide]                        PROVIDE (radio_handler = default_handler)
+                [!provide]                        PROVIDE (uart0_handler = default_handler)
+                [!provide]                        PROVIDE (i2c0_handler = default_handler)
+                [!provide]                        PROVIDE (i2c1_handler = default_handler)
+                [!provide]                        PROVIDE (nfc_handler = default_handler)
+                [!provide]                        PROVIDE (gpiote_handler = default_handler)
+                [!provide]                        PROVIDE (adc_handler = default_handler)
+                [!provide]                        PROVIDE (timer0_handler = default_handler)
+                [!provide]                        PROVIDE (timer1_handler = default_handler)
+                [!provide]                        PROVIDE (timer2_handler = default_handler)
+                [!provide]                        PROVIDE (rtc0_handler = default_handler)
+                [!provide]                        PROVIDE (temp_handler = default_handler)
+                [!provide]                        PROVIDE (rng_handler = default_handler)
+                [!provide]                        PROVIDE (ecb_handler = default_handler)
+                [!provide]                        PROVIDE (ccm_aar_handler = default_handler)
+                [!provide]                        PROVIDE (wdt_handler = default_handler)
+                [!provide]                        PROVIDE (rtc1_handler = default_handler)
+                [!provide]                        PROVIDE (qdec_handler = default_handler)
+                [!provide]                        PROVIDE (lpcomp_handler = default_handler)
+                [!provide]                        PROVIDE (swi0_handler = default_handler)
+                [!provide]                        PROVIDE (swi1_handler = default_handler)
+                [!provide]                        PROVIDE (swi2_handler = default_handler)
+                [!provide]                        PROVIDE (swi3_handler = default_handler)
+                [!provide]                        PROVIDE (swi4_handler = default_handler)
+                [!provide]                        PROVIDE (swi5_handler = default_handler)
+                [!provide]                        PROVIDE (timer3_handler = default_handler)
+                [!provide]                        PROVIDE (timer4_handler = default_handler)
+                [!provide]                        PROVIDE (pwm0_handler = default_handler)
+                [!provide]                        PROVIDE (pdm_handler = default_handler)
+                [!provide]                        PROVIDE (mwu_handler = default_handler)
+                [!provide]                        PROVIDE (pwm1_handler = default_handler)
+                [!provide]                        PROVIDE (pwm2_handler = default_handler)
+                [!provide]                        PROVIDE (spi0_handler = default_handler)
+                [!provide]                        PROVIDE (rtc2_handler = default_handler)
+                [!provide]                        PROVIDE (i2s_handler = default_handler)
+                [!provide]                        PROVIDE (fpu_handler = default_handler)
+                [!provide]                        PROVIDE (usbd_handler = default_handler)
+                [!provide]                        PROVIDE (uart1_handler = default_handler)
+                [!provide]                        PROVIDE (pwm3_handler = default_handler)
+                [!provide]                        PROVIDE (spi1_handler = default_handler)
+
+.glue_7         0x000000f8        0x0
+ .glue_7        0x000000f8        0x0 linker stubs
+
+.glue_7t        0x000000f8        0x0
+ .glue_7t       0x000000f8        0x0 linker stubs
+
+.vfp11_veneer   0x000000f8        0x0
+ .vfp11_veneer  0x000000f8        0x0 linker stubs
+
+.v4_bx          0x000000f8        0x0
+ .v4_bx         0x000000f8        0x0 linker stubs
+
+.xram           0x0081f000        0x0 load address 0x000000f8
+                0x0081f000                        __xram_start = .
+ *(.xram*)
+                0x0081f000                        . = ALIGN (0x4)
+                0x0081f000                        __xram_end = .
+
+.data           0x20000000        0x0 load address 0x000000f8
+                0x20000000                        __data_start = .
+ *(.data*)
+ .data          0x20000000        0x0 blink2.o
+                0x20000000                        . = ALIGN (0x4)
+                0x20000000                        __data_end = .
+
+.bss            0x20000000        0x0 load address 0x000000f8
+                0x20000000                        __bss_start = .
+ *(.bss*)
+ .bss           0x20000000        0x0 blink2.o
+ *(COMMON)
+                0x20000000                        . = ALIGN (0x4)
+                0x20000000                        __bss_end = .
+                0x20000000                        __end = .
+                0x2001f000                        __stack = (ORIGIN (RAM) + LENGTH (RAM))
+                0x2001e800                        __stack_limit = (__stack - 0x800)
+                0x00000001                        ASSERT ((__stack_limit >= __end), region RAM overlaps with stack)
+LOAD blink2.o
+OUTPUT(blink2.elf elf32-littlearm)
+LOAD linker stubs
+
+.ARM.attributes
+                0x00000000       0x21
+ .ARM.attributes
+                0x00000000       0x21 blink2.o

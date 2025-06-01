@@ -1,13 +1,14 @@
-all: blink.hex
+FILE=blink
+all: $(FILE).hex
 
-%.o: %.asm
+$(FILE).o: $(FILE).asm
 	arm-none-eabi-as -mcpu=cortex-m4 -mthumb $< -o $@
 
-%.elf: %.o
+$(FILE).elf: $(FILE).o
 	arm-none-eabi-ld -T nRF52833.ld $^ -o $@ -Map $*.map
 	arm-none-eabi-size $@
 
-%.hex: %.elf
+$(FILE).hex: $(FILE).elf
 	arm-none-eabi-objcopy -O ihex $< $@
 
 clean:
