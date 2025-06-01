@@ -1,6 +1,9 @@
 # micro:bit v2 ASM Stuff  
 I was bored, and tired of makecode  
 so i did this :D  
+  
+If your reading the code, the comments may not be 100% accurate  
+because im to lazy to update them  
 
 ## Running  
 blink.asm is the code to display a happy face  
